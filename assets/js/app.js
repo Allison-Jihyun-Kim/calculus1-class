@@ -6,13 +6,28 @@ let bisectionStage = 0;
 
 function scaleStage() {
   const stage = document.getElementById('stage');
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const scale = Math.min(vw / 1920, vh / 1080);
+  if (!stage) return;
+
+  // Use the actual tablet/browser viewport when available (important on iPad Safari).
+  const viewport = window.visualViewport;
+  const vw = viewport ? viewport.width : window.innerWidth;
+  const vh = viewport ? viewport.height : window.innerHeight;
+  const designWidth = 1366;
+  const designHeight = 1024;
+
+  // Keep a tiny safety margin so the lower-right navigation is never clipped by browser chrome.
+  const safeWidth = Math.max(320, vw - 8);
+  const safeHeight = Math.max(320, vh - 8);
+  const scale = Math.min(safeWidth / designWidth, safeHeight / designHeight);
+
   stage.style.transform = `scale(${scale})`;
   stage.style.transformOrigin = 'center center';
 }
 window.addEventListener('resize', scaleStage);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', scaleStage);
+  window.visualViewport.addEventListener('scroll', scaleStage);
+}
 
 function initDots() {
   const dots = document.getElementById('pageDots');
