@@ -26,9 +26,10 @@ html, body {
   width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;
 }
 #stage {
-  width: 1920px; height: 1080px; position: relative;
+  /* Tablet-first 4:3 design canvas. JavaScript scales this canvas to the actual device screen. */
+  width: 1366px; height: 1024px; position: relative;
   background: linear-gradient(180deg, var(--bg2), var(--bg1));
-  border-radius: 28px; overflow: hidden; box-shadow: 0 30px 90px rgba(30, 72, 131, 0.25);
+  border-radius: 24px; overflow: hidden; box-shadow: 0 24px 70px rgba(30, 72, 131, 0.22);
 }
 
 .topbar {
@@ -84,7 +85,8 @@ html, body {
 .page-dot.active { background: var(--primary); transform: scale(1.2); }
 
 #pages {
-  position: absolute; inset: 144px 26px 92px 26px;
+  /* Leave a dedicated navigation strip at the bottom so controls never cover content. */
+  position: absolute; inset: 136px 22px 104px 22px;
 }
 .page {
   position: absolute; inset: 0; display: none;
@@ -236,7 +238,8 @@ input[type="range"] { width: 100%; }
 .top-gap { margin-top: 16px; }
 
 .global-controls {
-  position: absolute; right: 30px; bottom: 20px; display: flex; gap: 16px; z-index: 8;
+  position: absolute; right: 22px; bottom: 18px; display: flex; gap: 12px; z-index: 50;
+  visibility: visible; opacity: 1; pointer-events: auto;
 }
 .control-group {
   display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 18px;
@@ -256,8 +259,40 @@ input[type="range"] { width: 100%; }
   width: 760px; background: white; border-radius: 24px; padding: 28px 30px; box-shadow: 0 30px 90px rgba(0,0,0,0.25);
 }
 
-@media (max-width: 1500px) {
-  .topbar h1 { font-size: 34px; }
+/* Tablet-first sizing for the 1366×1024 design canvas. */
+.topbar { height: 102px; padding: 18px 28px 14px; }
+.eyebrow { font-size: 15px; }
+.topbar h1 { margin-top: 6px; font-size: 31px; }
+.top-right { gap: 12px; }
+#pageIndicator { font-size: 15px; padding: 8px 12px; }
+.page-dots { top: 110px; left: 28px; right: 28px; }
+.subunit-bar { margin-bottom: 12px; }
+.subunit-bar h2 { font-size: 28px; }
+.mini-note { font-size: 14px; padding: 8px 12px; }
+.tabs { gap: 8px; padding-bottom: 12px; }
+.tab-btn { padding: 11px 14px; font-size: 15px; }
+.panel-card { border-radius: 20px; padding: 20px; }
+.panel-card h3 { font-size: 23px; margin-bottom: 12px; }
+.hero-card { padding: 26px; }
+.hero-card h2 { font-size: 42px; }
+.hero-text { font-size: 20px; }
+.goal-boxes { gap: 12px; margin-top: 18px; }
+.goal-box { padding: 14px; }
+.goal-box h3 { font-size: 19px; }
+.goal-box p, .feature-list, .guided-list { font-size: 15px; }
+.blank-item, .hint-box, .formula-box, .solution-box { font-size: 15px; }
+.answer-input, .submission-area, .student-id-input, .student-name-input { font-size: 16px; }
+.fee-table { font-size: 15px; }
+.fee-table th, .fee-table td { padding: 8px 10px; }
+.two-col { gap: 14px; }
+.submission-area { height: 145px; }
+.control-group { padding: 8px 10px; gap: 6px; border: 1px solid rgba(36, 104, 201, 0.12); }
+.control-label { font-size: 14px; }
+.nav-btn { width: 46px; height: 46px; font-size: 18px; }
+
+@media (max-aspect-ratio: 1/1) {
+  /* Portrait tablets still show the full lesson canvas without scrolling. */
+  #stage { border-radius: 18px; }
 }
 
 /* Requested answer feedback: show the canonical answer beside an incorrect blank. */
